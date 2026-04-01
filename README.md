@@ -4,6 +4,8 @@
 
 <h1 align="center">Memora 忆码</h1>
 
+<p align="center"><a href="README-zh.md">中文版</a></p>
+
 <p align="center">
   <strong>Own your AI coding memory. Continue anywhere.</strong><br>
   <sub>Capture, organize, and restore your AI coding conversations across every tool.</sub>
