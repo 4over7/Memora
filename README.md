@@ -1,10 +1,23 @@
-# Memora 忆码
+<p align="center">
+  <img src="icon-rounded.png" width="128" height="128" alt="Memora">
+</p>
 
-**Own your AI coding memory. Continue anywhere.**
+<h1 align="center">Memora 忆码</h1>
 
-Memora is a desktop app that captures, organizes, and restores your AI coding conversations across multiple tools — so you never lose context again.
+<p align="center">
+  <strong>Own your AI coding memory. Continue anywhere.</strong><br>
+  <sub>Capture, organize, and restore your AI coding conversations across every tool.</sub>
+</p>
+
+<p align="center">
+  <a href="https://github.com/4over7/Memora/releases/latest">Download for macOS</a>
+</p>
 
 ---
+
+<p align="center">
+  <img src="docs/screenshots/project-overview.png" width="800" alt="Project Overview">
+</p>
 
 ## The Problem
 
@@ -41,9 +54,17 @@ The core differentiator. Select conversations, git history, and project files fr
 - Automatic `CLAUDE.md` / `AGENTS.md` references so AI tools read the context
 - Works with **any** AI coding tool
 
+<p align="center">
+  <img src="docs/screenshots/continue-v2.png" width="700" alt="Continue V2 Wizard">
+</p>
+
 ### Dual-Track Timeline
 
 View conversations and git commits side by side in a synchronized timeline. See what was discussed and what was built, together.
+
+<p align="center">
+  <img src="docs/screenshots/dialogue.png" width="700" alt="Dual-Track Timeline">
+</p>
 
 ### Blackboard
 
