@@ -2,6 +2,26 @@
 
 All notable changes to Memora are documented here.
 
+## [0.1.7] — 2026-04-02
+
+### Fixed (Independent Review)
+- **F1**: commit-link processing moved after git sync to prevent silent association loss; design doc synced to actual implementation
+- **F3**: Drift verdict cancellation now persists (DELETE from DB instead of UI-only clear)
+- **F5**: flutter analyze 0 issues, flutter test 52/52 pass (fixed Ollama URL + custom_anthropic assertions)
+- **F6**: Settings "Reinstall Hooks" button for retry after skip/failure
+- **F7**: Branch filter shows empty state instead of silently falling back to all sessions
+
+### Improved
+- **F2**: Git auto-backup commands log failures to stderr via run_git() helper
+- **F4**: Drift reads strategy files full text (up to 5000 chars); continue context expanded to 50 commits + 10 sessions
+- Blackboard view toggle: Insights | vs Plan (replaces separate Drift card)
+- Prev/next commit navigation buttons (replaces inaccurate scrollbar markers)
+- Search: keyword highlighting, snippet around match, result count, clear project selection
+- Session timeline: right-click commits for Recall/Branch
+- Branch dialog: Browse button for target directory in Clone mode
+- Responsive Blackboard cards (horizontal >700px, vertical otherwise)
+- Titlebar: fullSizeContentView eliminates gap between traffic lights and content
+
 ## [0.1.5] — 2026-04-01
 
 ### Added
