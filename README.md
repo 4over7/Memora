@@ -58,6 +58,23 @@ The core differentiator. Select conversations, git history, and project files fr
   <img src="docs/screenshots/continue-v2.png" width="700" alt="Continue V2 Wizard">
 </p>
 
+### Smart Approval — Dynamic Island for AI
+
+Claude Code wants to run a command. Normally you'd switch to terminal, parse the shell, decide — that's friction. Memora catches every tool request and shows it in a Dynamic Island-style floating panel pinned to the notch, so you never leave your current app:
+
+- One-line **action verb** + intent (`🌐 Download file from example.com`)
+- Key parameters highlighted, raw shell hidden
+- **AI risk verdict** (low / medium / high) as reference
+- One click → Allow / Deny
+
+<p align="center">
+  <img src="docs/screenshots/beacon-approval.png" width="600" alt="Beacon Smart Approval">
+</p>
+
+### Unattended Mode
+
+When you trust the AI to handle routine operations, opt in to Unattended Mode: the AI auto-approves everything **except** deny-list hits and high-risk verdicts. Only what actually matters stops to ask you. Toggle in Settings.
+
 ### Dual-Track Timeline
 
 View conversations and git commits side by side in a synchronized timeline. See what was discussed and what was built, together.
@@ -183,6 +200,23 @@ Memora 在后台安静运行，从你所有的 AI 编程工具中捕获对话，
 <p align="center">
   <img src="docs/screenshots/continue-v2.png" width="700" alt="Continue V2 向导">
 </p>
+
+### 智能审批 — AI 时代的灵动岛
+
+Claude Code 要执行一个命令,正常流程是切到终端、解析 shell、决定能不能跑——这是 friction。Memora 监听每个工具请求,在刘海下的灵动岛风格浮动面板上展示,不打断你当前工作:
+
+- 一行**动作动词** + 意图(`🌐 从 example.com 下载文件`)
+- 关键参数高亮,raw shell 不再刺眼
+- **AI 风险判断**(低 / 中 / 高)作为参考
+- 一键 Allow / Deny
+
+<p align="center">
+  <img src="docs/screenshots/beacon-approval.png" width="600" alt="Beacon 智能审批">
+</p>
+
+### 省心模式
+
+当你信任 AI 处理日常操作,可以开启省心模式:AI **自动放过**所有操作,**除了** deny-list 命中和高风险判定。真正重要的才会问你。设置中切换。
 
 ### 双轨时间线
 
