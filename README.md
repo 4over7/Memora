@@ -58,9 +58,23 @@ The core differentiator. Select conversations, git history, and project files fr
   <img src="docs/screenshots/continue-v2.png" width="700" alt="Continue V2 Wizard">
 </p>
 
-### Smart Approval — Dynamic Island for AI
+### Beacon — Dynamic Island for AI Coding
 
-Claude Code wants to run a command. Normally you'd switch to terminal, parse the shell, decide — that's friction. Memora catches every tool request and shows it in a Dynamic Island-style floating panel pinned to the notch, so you never leave your current app:
+Memora's Beacon lives in the notch. Three states, always just right:
+
+**Collapsed** — quiet, ambient, never in the way.
+
+<p align="center">
+  <img src="docs/screenshots/beacon-collapsed.png" width="400" alt="Beacon Collapsed">
+</p>
+
+**Expanded** — at-a-glance project status: AI-generated summary + session count + commit count. Updates as you work.
+
+<p align="center">
+  <img src="docs/screenshots/beacon-expanded.png" width="500" alt="Beacon Expanded">
+</p>
+
+**Smart Approval** — when Claude Code wants to run a command, Beacon shows an approval card so you never leave your current app:
 
 - One-line **action verb** + intent (`🌐 Download file from example.com`)
 - Key parameters highlighted, raw shell hidden
@@ -201,9 +215,23 @@ Memora 在后台安静运行，从你所有的 AI 编程工具中捕获对话，
   <img src="docs/screenshots/continue-v2.png" width="700" alt="Continue V2 向导">
 </p>
 
-### 智能审批 — AI 时代的灵动岛
+### Beacon — AI 时代的灵动岛
 
-Claude Code 要执行一个命令,正常流程是切到终端、解析 shell、决定能不能跑——这是 friction。Memora 监听每个工具请求,在刘海下的灵动岛风格浮动面板上展示,不打断你当前工作:
+Beacon 常驻在刘海里,三种状态,各司其职:
+
+**收缩态** — 安静的常驻指示,不打扰。
+
+<p align="center">
+  <img src="docs/screenshots/beacon-collapsed.png" width="400" alt="Beacon 收缩态">
+</p>
+
+**展开态** — 项目状态一目了然:AI 生成的动态摘要 + session 数 + commit 数,随工作进展实时更新。
+
+<p align="center">
+  <img src="docs/screenshots/beacon-expanded.png" width="500" alt="Beacon 展开态">
+</p>
+
+**智能审批** — Claude Code 要执行命令时,Beacon 弹出审批卡,不打断你当前工作:
 
 - 一行**动作动词** + 意图(`🌐 从 example.com 下载文件`)
 - 关键参数高亮,raw shell 不再刺眼
