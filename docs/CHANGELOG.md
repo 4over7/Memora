@@ -2,6 +2,87 @@
 
 All notable changes to Memora are documented here.
 
+## [1.0.2] — 2026-06-11
+
+> Dashboard 模型分布跟随全局指标 + Token 口径统一（billed 摊分，标注不含缓存的实际产出）+ 分享卡片加入模型分布；**修复 Cursor 消息重复数据 bug（与 v1.0.1 的 Codex 同因，影响 Cursor 用户）**。
+
+---
+
+### 🔥 修复 Cursor 消息重复（数据完整性，影响所有 Cursor 用户）
+
+与 v1.0.1 修的 Codex 同因：Cursor 此前用随机 UUID 当 message id，而 Cursor session 在源更新（`lastUpdatedAt` 变化）时会重新入库，随机 id 与已有不匹配 → 消息被反复插入累积。
+
+修复：Cursor message id 改为确定性 `cursor-<composer>-<bubble_id>`（用源稳定的 bubble id），重新入库幂等去重。升级时通过 migration 自动清空旧 Cursor 消息 + 全量重建。Claude Code / Codex / OpenCode 不受影响。
+
+### 🆕 Dashboard 模型分布跟随全局指标
+
+模型分布现在跟随上方的指标切换器（对话 / 消息 / Token），与「AI 工具分布」一致；提交无模型维度，fallback 到消息。分享卡片也加入了「模型分布」板块。
+
+### 🆕 模型分布 Token 口径统一 + 标注实际产出
+
+模型分布的 Token 此前用 per-message token_count（不含 cache_read），与核心数字 / 工具分布的 billed（API 计费总量，含 cache_read）对不上。现统一为 **billed 按模型消息占比摊分**（与上方一致），并在下方标注 **「不含缓存 X」**（实际产出 = input + output，不含缓存重读）。能直观看出哪些模型缓存重读占比高（如某模型计费 22B、实际产出仅 1.7B，13× 是反复读缓存）。
+
+---
+
+## [1.0.1] — 2026-06-11
+
+> Dashboard 模型分布跟随全局指标切换器；**修复 Codex 消息重复的严重数据 bug（实测约 5x 虚高）**——所有 Codex 用户的会话/消息/Token 统计都受影响，升级时自动清理回填。
+
+---
+
+### 🔥 修复 Codex 消息重复（数据完整性，影响所有 Codex 用户）
+
+Codex 此前用随机 UUID 当 message id，而入库是增量 `INSERT OR IGNORE`。active session 的 jsonl 每增长就触发重新入库，随机 id 与已有不匹配 → 消息被当作新的反复插入 → **重复长期累积**。实测本机 Codex 消息 28507 条，去重后真实仅 4862 条（约 5x 虚高）。Dashboard 里 Codex 的消息/会话/Token 计数因此一直偏高（如 gpt-5.5 显示 7.6k，真实 1377）。
+
+修复：Codex message id 改为确定性 `codex-<session>-<seq>`（文件名 + 顺序），重新入库幂等、去重生效。升级时通过 migration 自动清空旧 Codex 消息 + 重建 FTS + 干净重入库（顺带回填 per-message token）。Claude Code / OpenCode 等不受影响。
+
+### 🆕 模型分布跟随全局指标
+
+Dashboard「模型分布」现在跟随上方的指标切换器（对话 / 消息 / 提交 / Token），与「AI 工具分布」一致——切到哪个指标，每个模型就按哪个统计。提交无模型维度，fallback 到消息。
+
+### 🆕 Codex per-message token 回填
+
+Codex 的 `token_count` 事件是 session 累计快照，此前只用于 session 级、per-message 恒为 0。现按相邻快照 delta 归属到每回合 assistant 消息（口径对齐 Claude Code），per-message token 总和精确等于 session total，让模型分布的 Token 指标对 Codex 也准确。早期不发 token 事件的老 session 仍为 0（源数据所限，非 bug）。
+
+---
+
+## [1.0.0] — 2026-06-11
+
+> **首个 1.0 里程碑**：新增「Beacon 审批中心」（待处理队列 + 历史 + 搜索 + 孤儿清理）、等待超时统一为全局配置，以及一轮深度审批安全加固（交叉 review B1-B7 + codex 6 轮独立验证，堵住约 48 个 hard-allow 绕过/边角变体 + IPC 数据丢失 + Rust 数据完整性）。25 个 commit since v0.9.4。
+
+---
+
+### 🆕 Beacon 审批中心
+
+审批从「瞬时单卡」升级为「持久队列 + 历史」。设置 → 通知渠道 → Beacon → 审批中心：
+
+- **待处理**：列出所有挂起的审批请求（错过卡片也能补处理），单个 / 批量 ✓✗。
+- **孤儿清理**：来源会话（CC/Codex）已退出的请求自动标记「来源已退出」并可清理（CC 用 ppid 判活，Codex 用 age-based 兜底；判活失败保守保留，不误清活跃请求）。
+- **历史**：回看全部审批历史，按命令 / 项目 / 决定（放行/拒绝）搜索过滤。
+
+详见 `docs/wiki/approval-center.md`。
+
+### 🆕 等待超时统一为全局配置
+
+去掉 Beacon 硬编码的 30 秒超时。现在 Beacon 与飞书托管**共用同一个「等待超时」配置**（5min / 30min / 2h / 24h，默认 30min），选择器移到通知渠道公共区，飞书关闭时也能配。超时与托管开关解耦——单机 Beacon 模式也读用户配置，不再被 30s 强制 fallback。
+
+### 🔒 安全加固（交叉 review + codex 6 轮独立验证）
+
+一轮深度审批安全审查，每条线索对着真实代码核验后才修：
+
+- **hard-allow 绕过（23 个实测确证）**：命令替换 / 重定向逃逸 / 引号绕过 / 编码绕过（ANSI-C `\x`·`\u`·`\U`）/ git 破坏命令（`branch -D`·`push --force`·`remote remove`）/ 路径逃逸 / 命令执行器（`command`·`env` builtin）等，逐项堵死。
+- **codex 6 轮独立验证**：抓出约 25 个自审漏掉的边角变体，逐条核验后修 + 回归测试锁死（`b4_security_audit` 90+ 断言）。hard-allow 定位为「best-effort 减打扰白名单」，纵深靠 deny-list（拦最危险）+ LLM 灰区 + 用户审批。
+- **IPC 数据丢失**：审批请求/响应非原子写 + 写失败仍删请求 → 改原子写（tmp+rename）+ 仅写成功才删；飞书状态机多处缺陷（OK 自触发、卡映射不清理、时间窗过滤、`_exec` 无 timeout）。
+- **Rust 数据完整性**：`clean_user_text` 死循环（OOM 风险）、FTS 跨 session 重复插入（v0.5.7 膨胀复活）、git 同步事务化、hook 等待语义（单机超时、`beacon_alive` 加进程名校验防 PID 复用假阳性、请求文件原子写）。
+
+### 🐛 其他
+
+- **更新检查**：改拉 release 列表挑最高 semver（不依赖 GitHub `latest` 指针）；DMG 按硬件 arch 选包，修 Intel 用户下错包。
+- **性能**：git 同步增量化 + 批量 scan 查询 + 每步计时埋点。
+- **deny-list 误拦**：`<< 'EOF'`（`<<` 与 delim 间带空格）的 quoted heredoc body 未被剥离，正文含危险字面词时误拦合法命令（dogfood 修复）。
+
+---
+
 ## [0.9.4] — 2026-06-09
 
 > **auto-save 数据保护重大修复**（静默失败 2 个月的 bug）+ Beacon commit 数 / Risk / Dashboard / 项目分组多项修复。25 个 commit since v0.9.3（含大量 research/wiki 文档）。
