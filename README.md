@@ -91,15 +91,23 @@ When you trust the AI to handle routine operations, opt in to Unattended Mode: t
 
 ### Dual-Track Timeline
 
-View conversations and git commits side by side in a synchronized timeline. See what was discussed and what was built, together.
+Conversations and git commits live in one stable-stream timeline — commits **nest under the conversation that produced them** (Context-Linked), so you see what was discussed and what was built, together. Open any session to read the full conversation, preserved verbatim.
 
 <p align="center">
-  <img src="docs/screenshots/dialogue.png" width="700" alt="Dual-Track Timeline">
+  <img src="docs/screenshots/dialogue.png" width="700" alt="Conversation View">
 </p>
 
 ### Blackboard
 
 AI-powered project analysis: recent outcomes, active discussions, and unlanded ideas — generated from your conversation and git history.
+
+### Dashboard — Cross-Project Analytics
+
+A bird's-eye view across all your projects: sessions, messages, commits, and token usage over time, with per-tool and per-model breakdowns. Token counts use the billed basis (prorated per model), annotating actual output vs. cache re-reads — so you can see exactly where your spend goes.
+
+<p align="center">
+  <img src="docs/screenshots/dashboard.png" width="800" alt="Dashboard">
+</p>
 
 ### Six-Layer Knowledge Model
 
@@ -248,15 +256,23 @@ Beacon 常驻在刘海里,三种状态,各司其职:
 
 ### 双轨时间线
 
-在同步的时间线上并排查看对话和 Git commit。同时看到讨论了什么和构建了什么。
+对话和 Git commit 同处一条稳定流时间线——commit **嵌套在产生它的对话之下**（Context-Linked），同时看到讨论了什么和构建了什么。点进任一会话，原文忠实复现。
 
 <p align="center">
-  <img src="docs/screenshots/dialogue.png" width="700" alt="双轨时间线">
+  <img src="docs/screenshots/dialogue.png" width="700" alt="会话详情">
 </p>
 
 ### Blackboard
 
 AI 驱动的项目分析：近期成果、活跃讨论和未落地的想法——基于你的对话和 Git 历史生成。
+
+### Dashboard — 跨项目分析
+
+俯瞰所有项目：对话、消息、提交、Token 用量随时间的变化，含按工具 / 按模型的分布。Token 用计费口径（按模型摊分），并标注实际产出 vs 缓存重读——清楚看到开销花在哪。
+
+<p align="center">
+  <img src="docs/screenshots/dashboard.png" width="800" alt="Dashboard">
+</p>
 
 ### 六层知识模型
 
