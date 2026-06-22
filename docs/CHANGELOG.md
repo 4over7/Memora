@@ -2,6 +2,22 @@
 
 All notable changes to Memora are documented here.
 
+## [1.1.4] — 2026-06-22
+
+> v1.1.3 数据保护瘦身的收尾与加固。
+
+### 🐛 修复
+
+- **数据保护快照瘦身更彻底**：`.gitignore` 进一步排除可再生的开发样本 / 评估数据（tool-use-samples / risk-annotated-bash / deepseek-eval-results）与 beacon 运行态缓存；存量仓库下次同步会自动收敛移出。核心数据（对话事件 / 会话摘要 / 反馈 / 规则）保护不变。
+- **时钟回拨健壮性**：系统时钟回拨时，自动保存不再被误判持续阻断（改为 fail-open）。
+
+### 🛠 内部
+
+- 重建瘦身脚本加固：运行中检测、Ctrl-C / kill 自动回滚、备份防碰撞、验证 fail-safe。
+- 修复 x86_64 跨架构打包偶发的 `pub.dev` socket error（cargokit 依赖解析改离线优先）。
+
+---
+
 ## [1.1.3] — 2026-06-22
 
 > 数据保护仓库（`~/.memora/.git`）膨胀根治：单台从 10GB+ 瘦身到 12MB。
